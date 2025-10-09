@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior Project - TED University</title>
+    <link rel="icon" type="image/png" href="images/logo-v2.png">
+
+
+    <style>
+    /* General styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #F9F7F7;
+        color: #112D4E;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    /* Navbar */
+    nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #FFFFFF;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 5%;
+        box-shadow: 0 2px 6px rgba(17, 45, 78, 0.08);
+        z-index: 1000;
+        box-sizing: border-box;
+    }
+
+    .nav-logo {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo-img {
+        height: 40px;
+        width: auto;
+        margin-right: 10px;
+    }
+
+    .logo-text {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #3F72AF;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 25px;
+    }
+
+    nav a {
+        color: #3F72AF;
+        font-weight: bold;
+        transition: 0.3s;
+        padding: 8px 16px;
+        border-radius: 4px;
+    }
+
+    nav a:hover {
+        color: #112D4E;
+        background-color: #DBE2EF;
+    }
+
+    /* Mobile Navigation */
+    .mobile-nav-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: #3F72AF;
+        cursor: pointer;
+        padding: 10px;
+    }
+
+    /* Group Name Animation */
+    .group-name-container {
+        text-align: center;
+        margin: 20px auto;
+        height: 60px;
+        overflow: hidden;
+    }
+
+    .group-name {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #3F72AF;
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        padding: 0 10px;
+    }
+
+    .group-name:hover {
+        color: #112D4E;
+        transform: scale(1.05);
+    }
+
+    .group-name::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background-color: #3F72AF;
+        transition: width 0.5s ease;
+    }
+
+    .group-name:hover::after {
+        width: 100%;
+    }
+
+    .group-name.open {
+        transform: scale(1.1);
+        color: #112D4E;
+    }
+
+    .group-subtitle {
+        font-size: 1.2rem;
+        color: #3F72AF;
+        margin-top: 10px;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.5s ease;
+    }
+
+    .group-subtitle.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    section {
+        padding: 60px 30px;
+        min-height: 70vh;
+    }
+
+    h1, h2 {
+        text-align: center;
+        color: #3F72AF;
+        margin-bottom: 15px;
+    }
+
+    p {
+        max-width: 700px;
+        margin: 5px auto 20px auto;
+        text-align: center;
+        line-height: 1.6;
+    }
+
+    /* Team / Jury cards */
+    .cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px;
+        margin-top: 30px;
+    }
+
+    .card {
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        padding: 20px;
+        width: 280px;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 2px 8px rgba(17, 45, 78, 0.08);
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 20px rgba(63, 114, 175, 0.3);
+    }
+
+    .card img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .card h3 {
+        margin: 15px 0 10px;
+        color: #112D4E;
+        font-size: 1.2em;
+    }
+
+    .card p {
+        margin: 0 0 12px;
+        color: #112D4E;
+        font-size: 1em;
+    }
+
+    .card a {
+        display: inline-block;
+        margin: 4px;
+        padding: 6px 12px;
+        border-radius: 5px;
+        background-color: #3F72AF;
+        color: #F9F7F7;
+        font-weight: bold;
+        transition: 0.3s;
+        font-size: 0.95em;
+    }
+
+    .card a:hover {
+        background-color: #112D4E;
+    }
+
+    /* Document cards */
+    .document-card {
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        padding: 25px;
+        width: 280px;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 2px 8px rgba(17, 45, 78, 0.08);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .document-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 20px rgba(63, 114, 175, 0.3);
+    }
+
+    .document-card h3 {
+        margin: 0 0 15px;
+        color: #112D4E;
+        font-size: 1.2em;
+    }
+
+    .document-card p {
+        margin: 0 0 20px;
+        color: #112D4E;
+        font-size: 0.95em;
+        flex-grow: 1;
+    }
+
+    .document-card .doc-icon {
+        font-size: 48px;
+        color: #3F72AF;
+        margin-bottom: 15px;
+    }
+
+    .document-card a {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: #3F72AF;
+        color: #F9F7F7;
+        font-weight: bold;
+        transition: 0.3s;
+        font-size: 0.95em;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .document-card a:hover {
+        background-color: #112D4E;
+    }
+
+    /* Smooth scroll */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Section separators */
+    #introduction { background-color: #F9F7F7; }
+    #documents { background-color: #DBE2EF; }
+    #team { background-color: #F9F7F7; }
+    #juries { background-color: #DBE2EF; }
+
+    /* Footer */
+    footer {
+        text-align: center;
+        padding: 25px;
+        background-color: #FFFFFF;
+        color: #3F72AF;
+        box-shadow: 0 -2px 6px rgba(17, 45, 78, 0.08);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .cards-container {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .nav-links {
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #FFFFFF;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            box-shadow: 0 2px 6px rgba(17, 45, 78, 0.08);
+        }
+        
+        .nav-links.active {
+            max-height: 300px;
+            padding: 10px 0;
+        }
+        
+        .mobile-nav-toggle {
+            display: block;
+        }
+        
+        .group-name {
+            font-size: 1.8rem;
+        }
+        
+        section {
+            padding: 80px 20px 40px;
+        }
+        
+        .logo-text {
+            font-size: 1.2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .group-name {
+            font-size: 1.5rem;
+        }
+        
+        .card, .document-card {
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .logo-text {
+            font-size: 1.1rem;
+        }
+        
+        .logo-img {
+            height: 35px;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-logo">
+            <!-- Replace with your actual logo image -->
+            <img src="images/logo-v2.png" alt="project" class="logo-img">
+            <div class="logo-text">BizPilot AI</div>
+        </div>
+        
+        <button class="mobile-nav-toggle" id="mobileNavToggle">☰</button>
+        
+        <div class="nav-links" id="navLinks">
+            <a href="#introduction">Home</a>
+            <a href="#documents">Documents</a>
+            <a href="#team">Team</a>
+            <a href="#juries">Supervisor & Juries</a>
+        </div>
+    </nav>
+
+    <!-- Introduction Section -->
+    <section id="introduction">
+        <div class="group-name-container">
+            <div class="group-name" id="groupName">Navigate Global Markets with AI Precision</div>
+            <div class="group-subtitle" id="groupSubtitle">Pioneering AI Solutions for International Commerce</div>
+        </div>
+        <p>
+            Expanding a business into new international territories is fraught with complexity and risk. Our senior project delivers an AI-powered B2B application that transforms this daunting process. Simply paste a product link, select a target country, and receive an instant, comprehensive market analysis and a ready-to-execute business plan. We turn global market uncertainty into a clear, data-driven strategy.
+        </p>
+    </section>
+
+    <!-- Documents Section -->
+    <section id="documents">
+        <h2>Project Documents</h2>
+        <div class="cards-container">
+            <div class="document-card">
+                <div class="doc-icon">📋</div>
+                <h3>Initial Proposal</h3>
+                <p>Detailed project proposal outlining objectives, methodology, and expected outcomes.</p>
+                <a href="documents/AI_B2B_Proposal_(1).pdf" download>Download</a>
+            </div>
+            <div class="document-card">
+                <div class="doc-icon">📊</div>
+                <h3>Progress Report</h3>
+                <p>Comprehensive report detailing project progress, challenges, and milestones achieved.</p>
+                <a href="documents/report2.pdf" download>Download</a>
+            </div>
+            <div class="document-card">
+                <div class="doc-icon">📑</div>
+                <h3>Final Presentation</h3>
+                <p>Complete presentation slides summarizing project findings and implementation details.</p>
+                <a href="documents/presentation.pdf" download>Download</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team">
+        <h2>Team Members</h2>
+        <div class="cards-container">
+            <div class="card">
+                <img src="images/pic3 loterry.jpeg" alt="Member 1">
+                <h3>Shahdad Peykani</h3>
+                <p>Developer</p>
+                <a href="https://github.com/shahdadpeykani" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/shahdadpeykani/" target="_blank">LinkedIn</a>
+            </div>
+            <div class="card">
+                <img src="images/Muhammad.jpeg" alt="Member 2">
+                <h3>Muhammad Ozar Mirza</h3>
+                <p>Developer</p>
+                <a href="#" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/ozar-mirza-b0896a227/" target="_blank">LinkedIn</a>
+            </div>
+            <div class="card">
+                <img src="images/Abdi.jpeg" alt="Member 3">
+                <h3>Abdirahman Tahlil Farah Hussein</h3>
+                <p>Developer</p>
+                <a href="#" target="_blank">GitHub</a>
+                <a href="#" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supervisor & Juries Section -->
+    <section id="juries">
+        <h2>Supervisor & Juries</h2>
+        <div class="cards-container">
+            <div class="card">
+                <img src="images/TanselHoca.png" alt="Supervisor">
+                <h3>Tansel Dökeroğlu</h3>
+                <p>Supervisor</p>
+                <a href="https://www.linkedin.com/in/tansel-d%C3%B6kero%C4%9Flu-a4649790/" target="_blank">LinkedIn</a>
+            </div>
+            <div class="card">
+                <img src="images/EminHoca.png" alt="Jury 1">
+                <h3>Emin Kuğu</h3>
+                <p>Jury Member</p>
+                <a href="https://www.linkedin.com/in/emin-kugu-79384b170/" target="_blank">LinkedIn</a>
+            </div>
+            <div class="card">
+                <img src="images/ElifHoca.png" alt="Jury 2">
+                <h3>Elif Kurtaran Özbudak</h3>
+                <p>Jury Member</p>
+                <a href="https://www.linkedin.com/in/elif-kurtaran-%C3%B6zbudak-pmp-tpy-1305561b/" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 TED University Senior Project
+    </footer>
+
+    <script>
+        // Mobile navigation toggle
+        const mobileNavToggle = document.getElementById('mobileNavToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileNavToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            mobileNavToggle.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+        
+        // Close mobile menu when clicking on a link
+        const navLinksItems = document.querySelectorAll('.nav-links a');
+        navLinksItems.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                    mobileNavToggle.textContent = '☰';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
