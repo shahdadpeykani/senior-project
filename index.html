@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior Project - TED University</title>
+    <link rel="icon" type="image/png" href="./images/favicon.jpeg">
+
+    <style>
+    /* General styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #F9F7F7;
+        color: #112D4E;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    /* Navbar */
+    nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #FFFFFF;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 5%;
+        box-shadow: 0 2px 6px rgba(17, 45, 78, 0.08);
+        z-index: 1000;
+        box-sizing: border-box;
+    }
+
+    .nav-logo {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo-img {
+        height: 40px;
+        width: auto;
+        margin-right: 10px;
+    }
+
+    .logo-text {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #3F72AF;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 25px;
+    }
+
+    nav a {
+        color: #3F72AF;
+        font-weight: bold;
+        transition: 0.3s;
+        padding: 8px 16px;
+        border-radius: 4px;
+    }
+
+    nav a:hover {
+        color: #112D4E;
+        background-color: #DBE2EF;
+    }
+
+    /* Mobile Navigation */
+    .mobile-nav-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: #3F72AF;
+        cursor: pointer;
+        padding: 10px;
+    }
+
+    /* Group Name Animation */
+    .group-name-container {
+        text-align: center;
+        margin: 20px auto;
+        height: 60px;
+        overflow: hidden;
+    }
+
+    .group-name {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #3F72AF;
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        padding: 0 10px;
+    }
+
+    .group-name:hover {
+        color: #112D4E;
+        transform: scale(1.05);
+    }
+
+    .group-name::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background-color: #3F72AF;
+        transition: width 0.5s ease;
+    }
+
+    .group-name:hover::after {
+        width: 100%;
+    }
+
+    .group-name.open {
+        transform: scale(1.1);
+        color: #112D4E;
+    }
+
+    .group-subtitle {
+        font-size: 1.2rem;
+        color: #3F72AF;
+        margin-top: 10px;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.5s ease;
+    }
+
+    .group-subtitle.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    section {
+        padding: 60px 30px;
+        min-height: 70vh;
+    }
+
+    h1, h2 {
+        text-align: center;
+        color: #3F72AF;
+        margin-bottom: 15px;
+    }
+
+    p {
+        max-width: 700px;
+        margin: 5px auto 20px auto;
+        text-align: center;
+        line-height: 1.6;
+    }
+
+    /* Team / Jury cards */
+    .cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px;
+        margin-top: 30px;
+    }
+
+    .card {
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        padding: 20px;
+        width: 280px;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 2px 8px rgba(17, 45, 78, 0.08);
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 20px rgba(63, 114, 175, 0.3);
+    }
+
+    .card img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .card h3 {
+        margin: 15px 0 10px;
+        color: #112D4E;
+        font-size: 1.2em;
+    }
+
+    .card p {
+        margin: 0 0 12px;
+        color: #112D4E;
+        font-size: 1em;
+    }
+
+    .card a {
+        display: inline-block;
+        margin: 4px;
+        padding: 6px 12px;
+        border-radius: 5px;
+        background-color: #3F72AF;
+        color: #F9F7F7;
+        font-weight: bold;
+        transition: 0.3s;
+        font-size: 0.95em;
+    }
+
+    .card a:hover {
+        background-color: #112D4E;
+    }
+
+    /* Document cards */
+    .document-card {
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        padding: 25px;
+        width: 280px;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 2px 8px rgba(17, 45, 78, 0.08);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .document-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 20px rgba(63, 114, 175, 0.3);
+    }
+
+    .document-card h3 {
+        margin: 0 0 15px;
+        color: #112D4E;
+        font-size: 1.2em;
+    }
+
+    .document-card p {
+        margin: 0 0 20px;
+        color: #112D4E;
+        font-size: 0.95em;
+        flex-grow: 1;
+    }
+
+    .document-card .doc-icon {
+        font-size: 48px;
+        color: #3F72AF;
+        margin-bottom: 15px;
+    }
+
+    .document-card a {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: #3F72AF;
+        color: #F9F7F7;
+        font-weight: bold;
+        transition: 0.3s;
+        font-size: 0.95em;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .document-card a:hover {
+        background-color: #112D4E;
+    }
+
+    /* Smooth scroll */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Section separators */
+    #introduction { background-color: #F9F7F7; }
+    #documents { background-color: #DBE2EF; }
+    #team { background-color: #F9F7F7; }
+    #juries { background-color: #DBE2EF; }
+
+    /* Footer */
+    footer {
+        text-align: center;
+        padding: 25px;
+        background-color: #FFFFFF;
+        color: #3F72AF;
+        box-shadow: 0 -2px 6px rgba(17, 45, 78, 0.08);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .cards-container {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .nav-links {
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #FFFFFF;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            box-shadow: 0 2px 6px rgba(17, 45, 78, 0.08);
+        }
+        
+        .nav-links.active {
+            max-height: 300px;
+            padding: 10px 0;
+        }
+        
+        .mobile-nav-toggle {
+            display: block;
+        }
+        
+        .group-name {
+            font-size: 1.8rem;
+        }
+        
+        section {
+            padding: 80px 20px 40px;
+        }
+        
+        .logo-text {
+            font-size: 1.2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .group-name {
+            font-size: 1.5rem;
+        }
+        
+        .card, .document-card {
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .logo-text {
+            font-size: 1.1rem;
+        }
+        
+        .logo-img {
+            height: 35px;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-logo">
+
+            <div class="logo-text">Stratify</div>
+        </div>
+        
+        <button class="mobile-nav-toggle" id="mobileNavToggle">☰</button>
+        
+        <div class="nav-links" id="navLinks">
+            <a href="#introduction">Home</a>
+            <a href="#documents">Documents</a>
+            <a href="#team">Team</a>
+            <a href="#juries">Supervisor & Juries</a>
+        </div>
+    </nav>
+
+    <!-- Introduction Section -->
+    <section id="introduction">
+        <div class="group-name-container">
+            <div class="group-name" id="groupName">An AI-Powered Multi-Agent Intelligence and Venture Planning Platform</div>
+        </div>
+        <p>
+            Stratify is an AI-powered multi-agent business intelligence and venture planning platform designed to help aspiring entrepreneurs transform ideas into structured,
+             data-driven business plans. By combining Retrieval-Augmented Generation (RAG),
+              intelligent AI agents, market analysis, financial modeling, and risk assessment,
+               Stratify guides users from initial idea validation to execution strategy.
+                The platform functions as an AI-powered business co-founder, generating comprehensive feasibility reports,
+                 structured financial projections, and even a starter website, making startup planning more accessible,
+                  analytical, and execution-oriented.
+        </p>
+        <img src="./images/favicon.jpeg" width="200" height="200" style="display:block; margin:auto;" />
+
+    </section>
+
+    <!-- Documents Section -->
+    <section id="documents">
+        <h2>Project Documents</h2>
+        <div class="cards-container">
+            <div class="document-card">
+                <div class="doc-icon">📋</div>
+                <h3>Initial Proposal</h3>
+                <p>Detailed project proposal outlining objectives, methodology, and expected outcomes.</p>
+                <a href="./documents/Stratify-Proposal-SENG_491.pdf" download>Download</a>
+            </div>
+            <div class="document-card">
+                <div class="doc-icon">📊</div>
+                <h3>Project Specifications Report</h3>
+                <p>Formal SRS document outlining system features, functional requirements, and technical specifications for Stratify framework.</p>
+                <a href="./documents/" download>Download</a>
+            </div>
+            <div class="document-card">
+                <div class="doc-icon">📑</div>
+                <h3>Project Analysis Report</h3>
+                <p>Technical analysis of system design patterns, AI agent orchestration, and quality gate implementation strategies.</p>
+                <a href="./documents/" download>Download</a>
+            </div>
+            <!-- New Cards -->
+            <div class="document-card">
+                <div class="doc-icon">🧮</div>
+                <h3>Multidisciplinary Engineering Analysis Report</h3>
+                <p>Comprehensive engineering analysis integrating multiple disciplines to evaluate system feasibility and performance metrics.</p>
+                <a href="" download>Download</a>
+            </div>
+            <div class="document-card">
+                <div class="doc-icon">🧠</div>
+                <h3>High-Level Design Report</h3>
+                <p>Overview of system architecture, design components, and interaction diagrams defining the structure of the Stratify framework.</p>
+                <a href="./documents/" download>Download</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team">
+        <h2>Team Members</h2>
+        <div class="cards-container">
+            <div class="card">
+                <img src="images/shahdad.jpg" alt="Member 1">
+                <h3>Shahdad Peykani</h3>
+                <p>Developer</p>
+                <a href="https://github.com/shahdadpeykani" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/shahdadpeykani/" target="_blank">LinkedIn</a>
+            </div>
+            <div class="card">
+                <img src="images//ozimirza.jpg" alt="Member 2">
+                <h3>Muhammad Ozar Mirza</h3>
+                <p>Developer</p>
+                <a href="#" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/ozar-mirza-b0896a227/" target="_blank">LinkedIn</a>
+            </div>
+            <div class="card">
+                <img src="images/abdii.jpg" alt="Member 3">
+                <h3>Abdirahman T. F. Hussein</h3>
+                <p>Developer</p>
+                <a href="#" target="_blank">GitHub</a>
+                <a href="#" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supervisor & Juries Section -->
+    <section id="juries">
+        <h2>Supervisor & Juries</h2>
+        <div class="cards-container">
+            <div class="card">
+                <img src="images/AYŞENURHOCA.jpg" alt="Supervisor">
+                <h3>Prof. Ayşenur Birtürk</h3>
+                <p>Supervisor</p>
+                <a href="" target="_blank">LinkedIn</a>
+            </div>
+            <div class="card">
+                <img src="./images/erenHoca.jpg" alt="Jury 1">
+                <h3>Prof. Eren Ulu</h3>
+                <p>Jury Member</p>
+                <a href="#" target="_blank">LinkedIn</a>
+            </div>
+            <div class="card">
+                <img src="images/ElifHoca.png" alt="Jury 2">
+                <h3>Prof. Elif Kurtaran Özbudak</h3>
+                <p>Jury Member</p>
+                <a href="https://www.linkedin.com/in/elif-kurtaran-%C3%B6zbudak-pmp-tpy-1305561b/" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 TED University Senior Project
+    </footer>
+
+    <script>
+        // Mobile navigation toggle
+        const mobileNavToggle = document.getElementById('mobileNavToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileNavToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            mobileNavToggle.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+        
+        // Close mobile menu when clicking on a link
+        const navLinksItems = document.querySelectorAll('.nav-links a');
+        navLinksItems.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                    mobileNavToggle.textContent = '☰';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
